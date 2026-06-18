@@ -3,25 +3,14 @@ name: Deploy Continuo a PythonAnywhere
 on:
   push:
     branches:
-      - main  # Se dispara automáticamente al empujar cambios a la rama main
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Descargar codigo de GitHub
-      uses: actions/checkout@v4.2.2
-
-    - name: Conectarse via SSH y actualizar servidor
-      uses: appleboy/ssh-action@v1.2.0
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /home/${{ secrets.SSH_USER }}/mi_dashboard
-          git pull origin main
-          source .venv/bin/activate
-          pip install -r requirements.txt
-          touch /var/www/${{ secrets.SSH_USER }}_pythonanywhere_com_wsgi.py
+    - name: Forzar actualización en PythonAnywhere vía API
+      run: |
+        curl -X POST "https://www.pythonanywhere.com/api/v0/user/JeferEsqui93/webapps/JeferEsqui93.pythonanywhere.com/reload/" \
+          -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
