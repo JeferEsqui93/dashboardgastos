@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Registrar Gasto{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Nuevo Gasto</h1>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Detalles del Gasto</h6>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('main.registrar_gasto') }}" method="POST">
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Ej: Tanqueo Gixxer 150 o Almuerzo oficina..."></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_categoria" class="form-label">Categoría</label>
+                            <select class="form-control" id="id_categoria" name="id_categoria" required>
+                                <option value="" selected disabled>Selecciona una categoría...</option>
+                                <option value="1">Arrendamiento</option>
+                                <option value="2">Servicios Públicos</option>
+                                <option value="3">Transporte</option>
+                                <option value="4">Educación</option>
+                                <option value="5">Entretenimiento</option>
+                                <option value="6">Deudas</option>
+                                <option value="7">Alimentación</option>
+                                <option value="8">Ocio y Diversión</option>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="monto" class="form-label">Monto (COP)</label>
+                                <input type="number" class="form-control" id="monto" name="costo" placeholder="0.00" required>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-save"></i>
+                                </span>
+                                <span class="text">Guardar</span>
+                            </button>
+                            <a href="{{ url_for('main.ver_gastos') }}" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

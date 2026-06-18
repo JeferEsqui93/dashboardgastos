@@ -1,0 +1,56 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('main.index') }}">
+        <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-wallet"></i></div>
+        <div class="sidebar-brand-text mx-3">GastosApp</div>
+    </a>
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item {% if request.endpoint == 'main.index' %}active{% endif %}">
+        <a class="nav-link" href="{{ url_for('main.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">GASTOS</div>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('main.ver_gastos') }}">
+            <i class="fas fa-fw fa-table"></i><span>Ver</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('main.registrar_gasto') }}">
+            <i class="fas fa-fw fa-edit"></i><span>Registrar</span>
+        </a>
+    </li>
+    
+    {% if session.get('rol') == 'Administrador' %}
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">USUARIO</div>
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-users"></i><span>Ver Usuarios</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-user-edit"></i><span>Editar</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-user-times"></i><span>Eliminar</span>
+        </a>
+    </li>
+    {% endif %}
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>

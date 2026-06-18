@@ -1,0 +1,45 @@
+{% extends "auth/base_auth.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block auth_content %}
+<div class="row justify-content-center">  
+    <div class="col-lg-10">
+        <div class="p-5">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">¡Bienvenido de nuevo!</h1>                
+                <!-- ESPACIO PARA MENSAJES DE ERROR (FLASH) -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+
+            <form class="user" method="POST" action="{{ url_for('auth.login') }}">
+                <div class="form-group">
+                    <input type="text" name="documento" class="form-control form-control-user"
+                        placeholder="Ingresa tu documento..." required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control form-control-user"
+                        placeholder="Contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
+                    Entrar
+                </button>
+            </form>
+            
+            <hr>
+            <div class="text-center">
+                <a class="small" href="{{ url_for('auth.register') }}">¿No tienes cuenta? ¡Regístrate!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

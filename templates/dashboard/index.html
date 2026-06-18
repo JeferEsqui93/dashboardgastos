@@ -1,0 +1,93 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Dashboard - Inicio{% endblock %}
+
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Bienvenido, {{ session['nombre'] }}</h1>
+</div>
+
+<!-- Filtro de temporalidad -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <!-- <h1 class="h3 mb-0 text-gray-800">Dashboard de Gastos</h1> -->
+    
+    <form method="GET" action="{{ url_for('main.index') }}" class="form-inline">
+        <label class="mr-2 text-dark font-weight-bold" for="temporalidad">Reporte por:</label>
+        <select name="temporalidad" id="temporalidad" class="form-control bg-white border-primary shadow-sm" onchange="this.form.submit()">
+            <option value="mes_actual" {% if temporalidad_actual == 'mes_actual' %}selected{% endif %}>Mes Actual</option>
+            <option value="ultimo_trimestre" {% if temporalidad_actual == 'ultimo_trimestre' %}selected{% endif %}>Último Trimestre</option>
+            <option value="ultimo_semestre" {% if temporalidad_actual == 'ultimo_semestre' %}selected{% endif %}>Último Semestre</option>
+            <option value="ultimo_año" {% if temporalidad_actual == 'ultimo_año' %}selected{% endif %}>Último Año</option>
+            <option value="todos_los_tiempos" {% if temporalidad_actual == 'todos_los_tiempos' %}selected{% endif %}>Todos los Tiempos</option>
+        </select>
+    </form>
+</div>
+<!-- Fin de filtro de temporalidad -->
+
+<!-- Tarjetas superiores con los KPI-->
+<div class="row mb-4">
+  {% for tarjeta in tarjetas %}
+  <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-{{ tarjeta.borde }} shadow h-100 py-2">
+          <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-{{ tarjeta.texto }} text-uppercase mb-1">
+                          {{ tarjeta.titulo }}
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          ${{ "{:,}".format(tarjeta.valor) }}
+                      </div>
+                  </div>
+                  <div class="col-auto">
+                      <i class="fas fa-{{ tarjeta.icono }} fa-2x text-gray-300"></i>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+</div>
+<!-- Fin de las tarjetas KPI -->
+
+<!-- Gráficas de cataegorías -->
+<div class="row">
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Distribución de Gastos por Categoría</h6>
+            </div>
+            <div class="card-body">
+              <div class="chart-bar" style="position: relative; height:320px;">
+                  <canvas id="myBarChart" 
+                          data-etiquetas="{{ etiquetas | tojson | forceescape }}" 
+                          data-valores="{{ valores | tojson | forceescape }}">
+                  </canvas>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6">
+      <div class="card shadow mb-4">
+          <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Porcentaje de Gastos por Categoría</h6>
+          </div>
+          <div class="card-body">
+              <div class="chart-pie" style="position: relative; height:320px;">
+                  <canvas id="myPieChart" 
+                          data-etiquetas="{{ etiquetas | tojson | forceescape }}" 
+                          data-valores="{{ valores | tojson | forceescape }}">
+                  </canvas>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+<!-- Fin de las gráficas de categorías -->
+ 
+<script src="{{ url_for('static', filename='vendor/chart.js/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/demo/chart-bar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/demo/chart-pie.js') }}"></script>
+
+{% endblock %}
