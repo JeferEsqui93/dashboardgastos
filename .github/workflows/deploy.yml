@@ -1,0 +1,27 @@
+name: Deploy Continuo a PythonAnywhere
+
+on:
+  push:
+    branches:
+      - main  # Se dispara automáticamente al empujar cambios a la rama main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar codigo de GitHub
+      uses: actions/checkout@v4
+
+    - name: Conectarse via SSH y actualizar servidor
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /home/${{ secrets.SSH_USER }}/mi_dashboard
+          git pull origin main
+          source .venv/bin/activate
+          pip install -r requirements.txt
+          touch /var/www/${{ secrets.SSH_USER }}_pythonanywhere_com_wsgi.py
