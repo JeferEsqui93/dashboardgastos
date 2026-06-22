@@ -92,6 +92,8 @@ class Gasto:
     @classmethod
     def obtener_gastos_por_categoria(cls, id_usuario, fecha_desde=None):
         db = DBManager()
+        # Iniciamos la lista de parámetros con el id_usuario (que siempre es obligatorio)
+        parametros = [id_usuario]
         
         # 1. Separamos el inicio de la consulta (Antes del GROUP BY)
         query_base = """
@@ -100,10 +102,7 @@ class Gasto:
             JOIN Categoria c ON g.id_categoria = c.id_categoria
             WHERE g.id_usuario = ?
         """
-        
-        # Iniciamos la lista de parámetros con el id_usuario (que siempre es obligatorio)
-        parametros = [id_usuario]
-        
+               
         # 2. SI EL USUARIO ELIGIÓ UNA FECHA FILTRO, LE INYECTAMOS EL EXTRA AL WHERE
         if fecha_desde:
             query_base += " AND g.fecha >= ?"

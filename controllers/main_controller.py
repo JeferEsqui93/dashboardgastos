@@ -18,11 +18,11 @@ def index():
     id_usuario = session.get('user_id')
     
     # 1. Capturar la opción elegida por el usuario (por defecto será 'mes')
-    temporalidad = request.args.get('temporalidad', 'mes')
+    temporalidad = request.args.get('temporalidad', 'mes_actual')
     
     # 2. Calcular la fecha de inicio según la opción
     hoy = datetime.today()
-    fecha_desde = None  # Si se queda en None, significa "Todos los tiempos"
+    fecha_desde = temporalidad  # Si se queda en None, significa "Todos los tiempos"
     
     if temporalidad == 'mes_actual':
         fecha_desde = hoy.replace(day=1).strftime('%Y-%m-%d')  # Primer día del mes actual
@@ -32,6 +32,8 @@ def index():
         fecha_desde = (hoy - timedelta(days=180)).strftime('%Y-%m-%d')
     elif temporalidad == 'ultimo_año':
         fecha_desde = (hoy - timedelta(days=365)).strftime('%Y-%m-%d')
+    elif temporalidad == 'todos_los_tiempos':
+        fecha_desde = None  # No aplicamos filtro de fecha
 
     # 3. Enviar la fecha calculada al modelo
     datos_db = Gasto.obtener_gastos_por_categoria(id_usuario, fecha_desde)

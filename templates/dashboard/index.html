@@ -14,11 +14,11 @@
     <form method="GET" action="{{ url_for('main.index') }}" class="form-inline">
         <label class="mr-2 text-dark font-weight-bold" for="temporalidad">Reporte por:</label>
         <select name="temporalidad" id="temporalidad" class="form-control bg-white border-primary shadow-sm" onchange="this.form.submit()">
-            <option value="mes_actual" {% if temporalidad_actual == 'mes_actual' %}selected{% endif %}>Mes Actual</option>
-            <option value="ultimo_trimestre" {% if temporalidad_actual == 'ultimo_trimestre' %}selected{% endif %}>Último Trimestre</option>
-            <option value="ultimo_semestre" {% if temporalidad_actual == 'ultimo_semestre' %}selected{% endif %}>Último Semestre</option>
-            <option value="ultimo_año" {% if temporalidad_actual == 'ultimo_año' %}selected{% endif %}>Último Año</option>
-            <option value="todos_los_tiempos" {% if temporalidad_actual == 'todos_los_tiempos' %}selected{% endif %}>Todos los Tiempos</option>
+            <option value="mes_actual" {% if temporalidad_actual == 'mes_actual' %}selected{% endif %}>Mes actual</option>
+            <option value="ultimo_trimestre" {% if temporalidad_actual == 'ultimo_trimestre' %}selected{% endif %}>Último trimestre</option>
+            <option value="ultimo_semestre" {% if temporalidad_actual == 'ultimo_semestre' %}selected{% endif %}>Último semestre</option>
+            <option value="ultimo_año" {% if temporalidad_actual == 'ultimo_año' %}selected{% endif %}>Último año</option>
+            <option value="todos_los_tiempos" {% if temporalidad_actual == 'todos_los_tiempos' %}selected{% endif %}>Todos los tiempos</option>
         </select>
     </form>
 </div>
