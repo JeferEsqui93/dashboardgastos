@@ -1,5 +1,21 @@
-__pycache__/
-*.pyc
-myenv/
+# === Base de datos (CRÍTICO para evitar bloqueos y pérdida de datos) ===
+database/control_gastos.db
+*.db
+*.sqlite3
+
+# === Entornos virtuales (Evita subir gigas de librerías instaladas) ===
+venv/
 .venv/
-.env
+env/
+ENV/
+
+# === Archivos temporales de Python (Caché del sistema) ===
+__pycache__/
+*.py[cod]
+*$py.class
+
+# === Configuraciones del editor y del sistema ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
